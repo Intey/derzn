@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic import TemplateView, CreateView
 
 from drevo.forms.knowledge_create_form import ZnanieCreateForm, ZnImageFormSet, ZnFilesFormSet
