@@ -105,13 +105,12 @@ class TableProxy:
     def get_cell_data(cell: Relation):
         """возвращает row_id и col_id для ячейки"""
 
-        if cell.meta_info:
-            meta_info = json.loads(cell.meta_info)
-        else:
+        meta_info = cell.get_meta_info(TableProxy.cell_key)
+        if not meta_info:
             raise ValueError(f"Не удалось получить метаинформацию для ячейки {cell}")
 
-        row_id = meta_info["cell"]["row"]
-        col_id = meta_info["cell"]["col"]
+        row_id = meta_info["row"]
+        col_id = meta_info["col"]
         return row_id, col_id
 
     @staticmethod
