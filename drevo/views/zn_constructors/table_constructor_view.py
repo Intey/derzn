@@ -648,69 +648,40 @@ class TableConstructView(
 class TableFillingView(LoginRequiredMixin, DispatchMixin, PrevNextMixin, TemplateView):
     """Представление для страницы «Наполнение таблицы»"""
 
-    template_name = "drevo/constructors/table_filling.html"
+    template_name = "drevo/constructors/table_editor.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Наполнение таблицы"
 
-        self.object = Znanie.objects.get(id=self.kwargs["pk"])
-        context["object"] = self.object
+        object = Znanie.objects.get(id=self.kwargs["pk"])
+        context["object"] = object
 
-        table = TableProxy(self.object)
-        if table.is_zero_table():
-            messages.warning(
-                self.request, "Таблица пустая. Необходимо задать структуру"
-            )
+        table = TableProxy(object)
+        header, cells = table.get_header_and_cells()
+        context["table_data"] = cells
+        context["table_header"] = header
 
-        if self.request.method == 'POST':
-            context["table_data"] = self.request.POST.get("table_data")
-            context["table_hash"] = self.request.POST.get("table_hash")
-        else:
-            header, cells = table.get_header_and_cells()
-            context["table_data"] = json.dumps(cells, ensure_ascii=False)
-
-            # Заголовки таблицы. Вдруг ее поменяют пока мы редактируем?
-            # можно было бы посчитать хэш, но json тоже сойдет - размер таблиц не ожидается очень большой
-            context["table_hash"] = json.dumps(header, ensure_ascii=False)
-
-        # Это ужасное решение - гнать весь список в страницу. Тут нужен запрос на сервер!!!!
-        context["knowledges"] = (
-            Znanie.objects.filter(tz__is_systemic=False, is_published=True)
-            .values("id", "name")
-            .order_by("name")
-        )
         return context
 
     def form_invalid(self):
         return self.get(self.request)
 
-    def form_valid(self):
-        messages.info(self.request, 'Таблица обновлена')
-        return self.get(self.request)
-
     def post(self, request, *args, **kwargs):
-        def repeats(data: list[dict]):
-            # возвращает объекты которые повторяются
-            counter = Counter([(int(item["id"]), item["name"]) for item in data])
-            result = [item[1] for item in counter if counter[item] > 1]
-            return result
 
-        self.object = Znanie.objects.get(id=kwargs["pk"])
-
-        tbl = TableProxy(self.object)
-        table_hash = json.loads(self.request.POST.get("table_hash"))
-        table_data = json.loads(self.request.POST.get("table_data"))
-        repeat = repeats(table_data)
-        if repeat:
-            messages.warning(request, f" Знания в таблице повторяются: {repeat}")
+        # если пришли данные не json - ничего не делаем
+        if not request.accepts("application/json"):
+            messages.warning(request, "Неверный формат запроса")
             return self.form_invalid()
+
+        knowledge = Znanie.objects.get(id=kwargs["pk"])
+        table = TableProxy(knowledge)
+        table_data = json.loads(self.request.body)
 
         try:
-            tbl.update_values(table_hash, table_data, self.request.user)
+            table.update_table(table_data, self.request.user)
 
         except KnowledgeProxyError as e:
-            messages.warning(request, str(e))
-            return self.form_invalid()
+            return JsonResponse({'result': str(e)}, status=409)
 
-        return self.form_valid()
+        return JsonResponse({'result': 'Таблица обновлена'}, status=200)

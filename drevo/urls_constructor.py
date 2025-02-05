@@ -109,13 +109,10 @@ urlpatterns = [
     ),
     # ---------------------------------------------------------------------------------------
     # структура и наполнение таблиц
-    path(
-        "table_constructor/<int:pk>/",
-        TableConstructView.as_view(),
-        name="table_constructor",
-    ),
+    path("table_constructor/<int:pk>/", TableFillingView.as_view(),  name="table_constructor",),
     path("filling_tables/<int:pk>/", TableFillingView.as_view(), name="filling_tables"),
-    # для вызова модального окна
+
+    # для вызова модального диалога создания знания
     path("znanie/add/", KnowledgeCreateViewModal.as_view(), name="knowledge_create"),
     # ---------------------------------------------------------------------------------------
     path(
