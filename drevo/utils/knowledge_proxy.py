@@ -81,7 +81,7 @@ class TableProxy:
 
         meta_info = cell.get_meta_info(TableProxy.cell_key)
         if not meta_info:
-            raise ValueError(f"Не удалось получить метаинформацию для ячейки {cell}")
+            raise KnowledgeProxyError(f"Не удалось получить метаинформацию для ячейки {cell}")
 
         row_id = meta_info["row"]
         col_id = meta_info["col"]
@@ -121,7 +121,11 @@ class TableProxy:
         """
         header = self._get_data(self.table_key)
         if not header:
-            header = {"group": "", "group_row": "", "group_col": "", "cols": [], "rows": []}
+            header = {"group": "",
+                      "group_row": "",
+                      "group_col": "",
+                      "cols": [],
+                      "rows": []}
 
         return header
 
@@ -270,7 +274,7 @@ class TableProxy:
         if self._has_repeats(data_cells):
             raise KnowledgeProxyError("Значения в таблице повторяются!")
 
-        self.knowledge.set_meta_info(self.table_key, header)
+        self._set_data(self.table_key, header)
         self.knowledge.save()
 
         self.update_relations(data_cells, user)
