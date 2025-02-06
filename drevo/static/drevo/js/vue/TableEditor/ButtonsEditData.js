@@ -26,10 +26,13 @@ export default {
    },
   },
   template: `
-        <div class="btn-group float-end btn-group-lg" role="group">
+        <div class="card">
+        <div class="card-header text-center">Наполнение ячеек</div>
+        <div class="btn-group" role="group">
             <button @click="onEdit" id="btn_data_edit" title="Редактировать текст" type="button" class="btn btn-primary" :class="classObject">✐</button>
             <button @click="onCreate" id="btn_data_add" title="Добавить знание" type="button" class="btn btn-primary" :class="classObject">+</button>
             <button @click="onSelect" id="btn_data_select" title="Выбрать знание" type="button" class="btn btn-primary" :class="classObject">🗀</button>
             <button @click="onClear" id="btn_data_clear" title="Очистить ячейку" type="button" class="btn btn-primary" :class="classObject">🗑</button>
+        </div>
         </div>`
 }

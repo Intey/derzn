@@ -94,10 +94,10 @@ template: `
     <div class="row mb-5">
         <div class="col"><DataTable/></div>
     </div>
-    <div class="row mb-5">
-        <div class="col-3"><ButtonsTableEdit/></div>
-        <div class="col-3"><ButtonsEditData/></div>
-        <div class="col-6"><ButtonsOkCancel :onSave="onSave" :SaveEnabled="store.isChanged"  /> </div>
+    <div class="row mb-3">
+        <div class="col-4"><ButtonsTableEdit/></div>
+        <div class="col-4"><ButtonsEditData/></div>
+        <div class="col-4"><ButtonsOkCancel :onSave="onSave" :SaveEnabled="store.isChanged"  /> </div>
     </div>
 
     <div class="row mb-5">

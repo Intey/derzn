@@ -25,7 +25,9 @@ export default {
     }
   },
   template: `
-        <div class="btn-group float-end btn-group-lg"  role="group">
+        <div class="card">
+        <div class="card-header text-center">Конструктор строк и столбцов</div>
+        <div class="btn-group"  role="group">
             <template v-if="isRow">
                 <button title="Добавить строку" @click="store.tableData.addRow('')" id="btn_row_add" type="button" :class="classObject">+</button>
                 <button title="Удалить строку" @click="store.tableData.delColRow('r', store.selected.elementId)" id="btn_row_del" type="button" :class="classObject">-</button>
@@ -38,6 +40,6 @@ export default {
                 <button title="Сместить колонку влево" @click="store.tableData.headerMove(store.selected.elementId,'c','-')" id="btn_col_left" type="button" :class="classObject">⯇</button>
                 <button title="Сместить колонку вправо" @click="store.tableData.headerMove(store.selected.elementId,'c','+')" id="btn_col_right" type="button" :class="classObject">⯈</button>
             </template>
-
+        </div>
         </div>`
 }
