@@ -23,7 +23,7 @@ template: `
 <td :class="classObject"
     @click="onClick"
     :key="{rowId, colId}">
-    <div class="data_cell">
+    <div class="data_cell text-start p-1">
     <span>{{ store.tableData.getCellText(rowId, colId) }}</span>
   </div>
 </td>`
