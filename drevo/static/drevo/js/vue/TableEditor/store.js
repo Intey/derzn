@@ -108,6 +108,8 @@ export const store = reactive({
         delColRow(elementType, id) {
             if (elementType=='r') {
                 if (this.rows.length==1) {
+                    store.app.alert('Должна присутствовать минимум одна строка!')
+                    return
 
                 }
                 const exist = [...this.cells.keys()].some((key) => key.split(':')[0]==id);
