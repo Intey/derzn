@@ -76,7 +76,7 @@ const app = Vue.createApp({
         .then(function (response) {
             console.log(response.data.result);
             store.isChanged=false
-            ElMessage({message: response.data.result, type: 'success', })
+            ElMessage({message: response.data.result, type: 'success', offset:140 })
         })
         .catch(function (error) {
             if (error.response && error.response.data.result) {
