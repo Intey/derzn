@@ -28,7 +28,7 @@ template: `
       @vue:mounted="({ el }) =>{ el.focus() }"
       placeholder="Введите название"
     />
-    <p draggable="true" v-else>{{ caption }}</p>
+    <p class="p-1" draggable="true" v-else>{{ caption }}</p>
   </div>`
 }
 
