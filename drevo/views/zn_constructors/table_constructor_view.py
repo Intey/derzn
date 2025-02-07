@@ -649,6 +649,7 @@ class TableFillingView(LoginRequiredMixin, DispatchMixin, PrevNextMixin, Templat
     """Представление для страницы «Наполнение таблицы»"""
 
     template_name = "drevo/constructors/table_editor.html"
+    ok_message = "Изменения в таблице успешно сохранены!"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -684,4 +685,4 @@ class TableFillingView(LoginRequiredMixin, DispatchMixin, PrevNextMixin, Templat
         except KnowledgeProxyError as e:
             return JsonResponse({'result': str(e)}, status=409)
 
-        return JsonResponse({'result': 'Таблица обновлена'}, status=200)
+        return JsonResponse({'result': self.ok_message}, status=200)
