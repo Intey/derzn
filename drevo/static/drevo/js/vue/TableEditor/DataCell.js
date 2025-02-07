@@ -8,8 +8,10 @@ export default {
     },
    computed: {
     classObject() {
+        let cell = store.tableData.getCell(this.rowId,this.colId)
         return {
-                selected: store.selected.isSelected('d', [this.rowId,this.colId])
+                selected: store.selected.isSelected('d', [this.rowId,this.colId]),
+                is_text: !cell.id
             }
     }
   },
