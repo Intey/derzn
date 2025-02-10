@@ -47,7 +47,7 @@ const app = Vue.createApp({
             const cell = store.tableData.getCell(rowId, colId)
 
             if (cell.id) {
-                this.alert("Внимание! Для ввода текста в ячейку со знанием необходимо сначала очистить её")
+                this.alert("Для ввода текста в ячейку со знанием необходимо сначала очистить её")
                 return
             }
 
@@ -55,7 +55,7 @@ const app = Vue.createApp({
     },
     createKnowledge() {
         if (!store.tableData.isCellFree()) {
-            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            this.alert("Для изменения знания в непустой ячейке необходимо сначала очистить её")
             return
         }
         this.$refs.createKnowledge.show()
@@ -68,7 +68,7 @@ const app = Vue.createApp({
     },
     selectKnowledge() {
         if (!store.tableData.isCellFree()) {
-            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            this.alert("Для изменения знания в непустой ячейке необходимо сначала очистить её")
             return
         }
         this.$refs.selectKnowledge.show()
