@@ -46,12 +46,11 @@ const app = Vue.createApp({
             const [rowId, colId ] = store.selected.elementId
             const cell = store.tableData.getCell(rowId, colId)
 
-            if (!cell.id) {
+            if (cell.id) {
                 this.alert("Внимание! Для ввода текста в ячейку со знанием необходимо сначала очистить её")
                 return
             }
-            const [rowId, colId ] = store.selected.elementId
-            const cell = store.tableData.getCell(rowId, colId)
+
             this.prompt(cell.text, (value) => {if (value)  store.tableData.setCellText(rowId, colId, value) })
     },
     createKnowledge() {
