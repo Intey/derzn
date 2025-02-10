@@ -42,7 +42,20 @@ const app = Vue.createApp({
        this.$refs.prompt.show(message)
        .then(text => {callOk(text)})
     },
+    tryTextEdit(){
+            if (!store.tableData.isCellFree()) {
+                this.alert("Внимание! Для ввода текста в ячейку со знанием необходимо сначала очистить её")
+                return
+            }
+            const [rowId, colId ] = store.selected.elementId
+            const cell = store.tableData.getCell(rowId, colId)
+            this.prompt(cell.text, (value) => {if (value)  store.tableData.setCellText(rowId, colId, value) })
+    },
     createKnowledge() {
+        if (!store.tableData.isCellFree()) {
+            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            return
+        }
         this.$refs.createKnowledge.show()
             .then(value => {
             if (value && store.selected.elementType=='d') {
@@ -52,6 +65,10 @@ const app = Vue.createApp({
             })
     },
     selectKnowledge() {
+        if (!store.tableData.isCellFree()) {
+            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            return
+        }
         this.$refs.selectKnowledge.show()
         .then(value => {
             if (value && store.selected.elementType=='d') {
@@ -76,7 +93,7 @@ const app = Vue.createApp({
         .then(function (response) {
             console.log(response.data.result);
             store.isChanged=false
-            ElMessage({message: response.data.result, type: 'success', })
+            ElMessage({message: response.data.result, type: 'success', offset:140 })
         })
         .catch(function (error) {
             if (error.response && error.response.data.result) {
@@ -94,10 +111,10 @@ template: `
     <div class="row mb-5">
         <div class="col"><DataTable/></div>
     </div>
-    <div class="row mb-5">
-        <div class="col-3"><ButtonsTableEdit/></div>
-        <div class="col-3"><ButtonsEditData/></div>
-        <div class="col-6"><ButtonsOkCancel :onSave="onSave" :SaveEnabled="store.isChanged"  /> </div>
+    <div class="row mb-3">
+        <div class="col-4"><ButtonsTableEdit/></div>
+        <div class="col-4"><ButtonsEditData/></div>
+        <div class="col-4"><ButtonsOkCancel :onSave="onSave" :SaveEnabled="store.isChanged"  /> </div>
     </div>
 
     <div class="row mb-5">

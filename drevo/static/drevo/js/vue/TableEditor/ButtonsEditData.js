@@ -8,15 +8,7 @@ export default {
   },
   methods:{
    onEdit (){
-        const [rowId, colId ] = store.selected.elementId
-        const cell = store.tableData.getCell(rowId, colId)
-        if (cell.id) {
-            this.$root.alert('нельзя менять текст в ячейке со знанием')
-            return
-        }
-        this.$root.prompt(cell.text, (value) => {
-            if (value)  store.tableData.setCellText(rowId, colId, value)
-            })
+       this.$root.tryTextEdit()
         },
    onCreate() { this.$root.createKnowledge() },
    onSelect() {this.$root.selectKnowledge() },
@@ -26,10 +18,13 @@ export default {
    },
   },
   template: `
-        <div class="btn-group float-end btn-group-lg" role="group">
+        <div class="card">
+        <div class="card-header text-center">Наполнение ячеек</div>
+        <div class="btn-group" role="group">
             <button @click="onEdit" id="btn_data_edit" title="Редактировать текст" type="button" class="btn btn-primary" :class="classObject">✐</button>
             <button @click="onCreate" id="btn_data_add" title="Добавить знание" type="button" class="btn btn-primary" :class="classObject">+</button>
             <button @click="onSelect" id="btn_data_select" title="Выбрать знание" type="button" class="btn btn-primary" :class="classObject">🗀</button>
             <button @click="onClear" id="btn_data_clear" title="Очистить ячейку" type="button" class="btn btn-primary" :class="classObject">🗑</button>
+        </div>
         </div>`
 }

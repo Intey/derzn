@@ -26,13 +26,12 @@
             this.close(this.value)
             this.dialogVisible = false
         }
-
     },
   template: `
        <el-dialog v-model="dialogVisible" :title="title" width="500">
     <el-form>
       <el-form-item :label="caption">
-        <el-input clearable v-model="value" ref="input_value" autocomplete="off" autofocus />
+        <el-input @keydown.enter.stop.prevent="ok" clearable v-model="value" ref="input_value" autocomplete="off" autofocus />
       </el-form-item>
     </el-form>
     <template #footer>

@@ -14,11 +14,9 @@
         remoteMethod(query) {
               this.loading = true;
               this.$root.http.get(`/drevo/search/knowledge_by_name?query=${query}`)
-                    .then(response =>
-                        this.options=response.data.map(
-                            (item)=>{ return {label: item.name, value: item} }
-                            ))
-                    this.loading = false;
+                    .then(response =>{
+                        this.options = response.data.map( (item)=>{ return {label: item.name, value: item} })
+                        this.loading = false;})
         },
         show(value) {
             this.value = value

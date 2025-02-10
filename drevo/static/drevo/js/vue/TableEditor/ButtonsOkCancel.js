@@ -14,8 +14,8 @@ export default {
         },
     },
   template: `
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary md-3" :disabled="!SaveEnabled" @click="doSave" type="button">Сохранить</button>
-            <button class="btn btn-secondary" @click="goPrev" type="button">Закрыть</button>
+        <div class="d-flex justify-content-end align-items-center">
+            <button class="btn btn-primary btn-lg m-2" :disabled="!SaveEnabled" @click="doSave" type="button">Сохранить</button>
+            <button class="btn btn-secondary btn-lg m-2" @click="goPrev" type="button">Закрыть</button>
         </div>`
 }
