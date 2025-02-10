@@ -1,5 +1,4 @@
 import {store} from './store.js'
-const { ElMessage } = ElementPlus
 export default {
     props: ['rowId','colId'],
 
@@ -33,16 +32,7 @@ export default {
             else this.timer = now
        },
        onEdit() {
-       const [rowId, colId ] = store.selected.elementId
-        const cell = store.tableData.getCell(rowId, colId)
-        if (cell.id) {
-            ElMessage.error('нельзя менять текст в ячейке со знанием')
-            return
-        }
-        this.$root.prompt(cell.text, (value) => {
-            if (value)  store.tableData.setCellText(rowId, colId, value)
-            })
-
+        this.$root.tryTextEdit()
        },
     },
 template: `

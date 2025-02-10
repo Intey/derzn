@@ -8,15 +8,7 @@ export default {
   },
   methods:{
    onEdit (){
-        const [rowId, colId ] = store.selected.elementId
-        const cell = store.tableData.getCell(rowId, colId)
-        if (cell.id) {
-            this.$root.alert('нельзя менять текст в ячейке со знанием')
-            return
-        }
-        this.$root.prompt(cell.text, (value) => {
-            if (value)  store.tableData.setCellText(rowId, colId, value)
-            })
+       this.$root.tryTextEdit()
         },
    onCreate() { this.$root.createKnowledge() },
    onSelect() {this.$root.selectKnowledge() },

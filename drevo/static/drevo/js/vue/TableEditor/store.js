@@ -1,4 +1,5 @@
 const { reactive } = Vue
+
 function array_move(arr, old_index, new_index) {
     if (new_index >= arr.length) {
         var k = new_index - arr.length + 1;
@@ -185,6 +186,12 @@ export const store = reactive({
         setCellByIndex(i, j, data) {
             this.cells.set(this.hashByIndex(i,j), data)
             //store.isChanged = true
-        }
+        },
+        isCellFree(){
+            if (store.selected.elementType != 'd') return false
+            const [rowId, colId ] = store.selected.elementId
+            const cell = store.tableData.getCell(rowId, colId)
+            return Boolean(!cell.id && !cell.text)
+        },
     },
 })

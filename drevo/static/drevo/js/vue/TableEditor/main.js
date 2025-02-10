@@ -42,7 +42,20 @@ const app = Vue.createApp({
        this.$refs.prompt.show(message)
        .then(text => {callOk(text)})
     },
+    tryTextEdit(){
+            if (!store.tableData.isCellFree()) {
+                this.alert("Внимание! Для ввода текста в ячейку со знанием необходимо сначала очистить её")
+                return
+            }
+            const [rowId, colId ] = store.selected.elementId
+            const cell = store.tableData.getCell(rowId, colId)
+            this.prompt(cell.text, (value) => {if (value)  store.tableData.setCellText(rowId, colId, value) })
+    },
     createKnowledge() {
+        if (!store.tableData.isCellFree()) {
+            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            return
+        }
         this.$refs.createKnowledge.show()
             .then(value => {
             if (value && store.selected.elementType=='d') {
@@ -52,6 +65,10 @@ const app = Vue.createApp({
             })
     },
     selectKnowledge() {
+        if (!store.tableData.isCellFree()) {
+            this.alert("Внимание! Для изменения знания в непустой ячейке необходимо сначала очистить её")
+            return
+        }
         this.$refs.selectKnowledge.show()
         .then(value => {
             if (value && store.selected.elementType=='d') {

@@ -67,7 +67,7 @@ export default {
                           @dragenter.prevent
                           ><TextCell :draggable="isDragable" v-model:caption="store.tableData.rows[index_row].name" /></th>
 
-                          <template v-for="(col, index_col) in store.tableData.cols">
+                          <template v-for="(col, index_col) in store.tableData.cols" :key="[row,col]">
                             <DataCell :rowId="row.id" :colId="col.id"/>
                           </template>
                 </tr>
