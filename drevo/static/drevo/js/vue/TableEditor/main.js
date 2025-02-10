@@ -43,7 +43,10 @@ const app = Vue.createApp({
        .then(text => {callOk(text)})
     },
     tryTextEdit(){
-            if (!store.tableData.isCellFree()) {
+            const [rowId, colId ] = store.selected.elementId
+            const cell = store.tableData.getCell(rowId, colId)
+
+            if (!cell.id) {
                 this.alert("Внимание! Для ввода текста в ячейку со знанием необходимо сначала очистить её")
                 return
             }
