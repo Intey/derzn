@@ -163,6 +163,7 @@ export const store = reactive({
         clearCell(rowId, colId) {
            const key = this.hashById(rowId, colId)
            this.cells.delete(key)
+           store.isChanged = true
         },
         getCellText(rowId, colId) {
             const value = this.getCell(rowId, colId)
